@@ -19,6 +19,8 @@ Route::get('/', function () {
 });
 
 Route::resource('/products', 'App\Http\Controllers\ProductController');
+Route::resource('/users', 'App\Http\Controllers\UserController');
+Route::resource('/orders', 'App\Http\Controllers\OrderController');
 
 Auth::routes();
 

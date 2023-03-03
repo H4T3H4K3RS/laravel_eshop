@@ -51,7 +51,7 @@
                         Delete
                     </button>
                 </form>
-                <a href="/products">
+                <a href="{{ route('products.index') }}">
                     <button type="button" class="btn btn-primary btn-sm">Cancel</button>
                 </a>
             </form>

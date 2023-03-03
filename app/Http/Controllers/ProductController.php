@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+//        $this->middleware('admin')->except('index')->except('show')->except('order');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -131,12 +136,16 @@ class ProductController extends Controller
         // Get the order data from the request
         $orderData = $request->input('order');
         $orderData = json_decode($orderData, true);
+
+
         // Format the order data into a message for the webhook
         $message = "New order:\n\n";
+        $products = "";
         $i = 0;
         foreach($orderData as $product) {
             $i += 1;
             $message .= "**=======Product {$i}=======**\n";
+            $products .= "・ {$product->name}";
             foreach ($product as $key => $value) {
                 $message .= "・**{$key}:** {$value}\n";
             }
@@ -153,7 +162,16 @@ class ProductController extends Controller
         $response = $client->post($webhookUrl, [
             'json' => $payload,
         ]);
+        $order = new Order();
 
+        // Set the user_id attribute to the ID of the authenticated user
+        $order->user_id = auth()->user()->id;
+        // Set the products attribute to the order data formatted as a JSON string
+//        $order->products = json_encode($orderData);
+        $order->products = $products;
+
+        // Save the order to the database
+        $order->save();
         // Return a response indicating whether the message was sent successfully
         if ($response->getStatusCode() == 204) {
             return response()->json(['message' => 'Order sent to Discord webhook']);

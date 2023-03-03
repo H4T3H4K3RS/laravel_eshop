@@ -5,17 +5,12 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Name: {{ $product->name }}
+            Name: {{ $user->name }}
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-8">
-                    <p>Category: {{ $product->category }}</p>
-                    <p>Price: {{ $product->price }} $</p>
-                    <p>Description: {{ $product->description }}</p>
-                </div>
-                <div class="col-4">
-                    <img src="{{ $product->href }}" width="300" height="300">
+                    <p>Email: {{$user->email}}</p>
                 </div>
             </div>
         </div>
@@ -25,15 +20,15 @@
             @else
                 @if(auth()->user()->is_admin)
                     <div class="col-1">
-                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-warning">
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">
                             Edit
                         </a>
                     </div>
 
                     <div class="col-1">
-                        <form method="POST" action="{{ route('products.destroy', $product->id) }}"
+                        <form method="POST" action="{{ route('users.destroy', $user->id) }}"
                               class="d-inline-flex"
-                              onsubmit="return confirmSubmit(event, 'Are you sure you want to delete product {{$product->name}}?')"
+                              onsubmit="return confirmSubmit(event, 'Are you sure you want to delete user {{$user->name}}?')"
                         >
                             @csrf
                             @method("DELETE")
@@ -44,12 +39,12 @@
                     </div>
 
                     <div class="col-1">
-                        <a class="btn btn-primary btn-sm" href="{{ route('products.index') }}">All</a>
+                        <a class="btn btn-primary btn-sm" href="/users">All</a>
                     </div>
                 @else
 
                     <div class="col-1">
-                        <a class="btn btn-primary btn-sm" href="{{ route('products.index') }}">All</a>
+                        <a class="btn btn-primary btn-sm" href="/users">All</a>
                     </div>
                 @endif
             @endguest

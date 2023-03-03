@@ -55,7 +55,7 @@ function search() {
     let i;
     let input = document.getElementById("search");
     let filter = input.value.toLowerCase();
-    let tbody = document.getElementById("products");
+    let tbody = document.getElementById("tbody");
     let tr = tbody.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
         txtValue = tr[i].id;
@@ -72,5 +72,8 @@ window.addEventListener("load", (event) => {
     cartData.innerHTML = "";
     for(let name of names){
         cartData.innerHTML += `<li>${name.name}</li>`
+    }
+    if(names.length === 0){
+        cartData.innerHTML = 'Empty Cart!';
     }
 });

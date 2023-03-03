@@ -4,7 +4,7 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-between mb-md-0 align-items-center">
                 <li>
-                    <a href="/" class="nav-link px-2 link-secondary">
+                    <a href="{{ route('products.index') }}" class="nav-link px-2 link-secondary">
                         <img src="https://i.ibb.co/X47BSBV/needmilk.png" alt="Logo" height="50">
                     </a>
                 </li>
@@ -12,10 +12,13 @@
                 @auth
                 @endauth
                 <li><a href="{{ route('products.index') }}" class="nav-link px-2 link-dark">Products</a></li>
-
-                <!-- Button trigger modal -->
-
-
+                @guest
+                @else
+                    @if(auth()->user()->is_admin)
+                        <li><a href="{{ route('users.index') }}" class="nav-link px-2 link-dark">Users</a></li>
+                        <li><a href="{{ route('orders.index') }}" class="nav-link px-2 link-dark">Orders</a></li>
+                    @endif
+                @endguest
             </ul>
             @guest
             @else
